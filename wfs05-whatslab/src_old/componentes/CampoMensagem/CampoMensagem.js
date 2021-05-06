@@ -23,9 +23,9 @@ margin: 3px 0 3px 0;
 `
 
 
-export class AmbienteMensagem extends React.Component{
+class AmbienteMensagem extends React.Component{
     state = {
-        valorNome: '',
+        valorRemetente: '',
         valorMensagem: '',
     }
 
@@ -33,8 +33,12 @@ export class AmbienteMensagem extends React.Component{
         this.setState({valorMensagem: event.target.value})
     }
 
-    onChangeNome = (event) => {
-        this.setState({valorNome: event.target.value})
+    onChangeRemetente = (event) => {
+        this.setState({valorRemetente: event.target.value})
+    }
+    enviarMensagem = () => {
+        console.log('Mensagem enviada!')
+        this.setState({valorMensagem: ''})
     }
     
     render(){
@@ -42,15 +46,15 @@ export class AmbienteMensagem extends React.Component{
             <MainContainer>
                 <InputNome 
                 placeholder = {'Nome'}
-                value = {this.state.valorNome}
-                onChange = {this.onChangeNome}
+                value = {this.state.valorRemetente}
+                onChange = {this.onChangeRemetente}
                 />
                 <InputMensagem 
                 placeholder = {'Mensagem...'}
                 value = {this.state.valorMensagem}
                 onChange = {this.onChangeMensagem}
                 />
-                <button>Enviar</button>
+                <button onClick = {this.props.enviarMensagem}>Enviar</button>
             </MainContainer>
         )
     }
