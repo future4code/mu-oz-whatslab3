@@ -86,6 +86,11 @@ class App extends React.Component {
       return (<BalaoConversa key = {this.state.mensagensEnviadas.indexOf(info)} bRemetente = {info.remetente} bMensagem = {info.mensagem} />)
     })
   }
+  pressionouEnter = (event) => {
+    if(event.which === 13) {
+      this.enviarMensagem();
+    }
+  }
   render() {
     return (
       <BodyContainer>
@@ -103,6 +108,7 @@ class App extends React.Component {
               placeholder={'Mensagem...'}
               value={this.state.valorMensagem}
               onChange={this.onChangeMensagem}
+              onKeyUp={this.pressionouEnter}
             />
             <InputBotao onClick={this.enviarMensagem}>Enviar</InputBotao>
           </MainContainer>
