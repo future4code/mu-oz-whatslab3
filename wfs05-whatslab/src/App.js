@@ -72,24 +72,29 @@ class App extends React.Component {
     this.setState({ valorRemetente: event.target.value })
   }
   enviarMensagem = () => {
-    const novaMensagem = {
-      remetente: this.state.valorRemetente,
-      mensagem: this.state.valorMensagem
-    };
-    this.setState({
-      mensagensEnviadas: [...this.state.mensagensEnviadas, novaMensagem],
-      valorMensagem: ''
-    });
+    if (this.state.valorMensagem !== "" && this.state.valorRemetente !== "") {
+      const novaMensagem = {
+        remetente: this.state.valorRemetente,
+        mensagem: this.state.valorMensagem
+      };
+      this.setState({
+        mensagensEnviadas: [...this.state.mensagensEnviadas, novaMensagem],
+        valorMensagem: ''
+      });
+    }
   };
-  renderizarMensagem = () =>{
+  renderizarMensagem = () => {
     return this.state.mensagensEnviadas.map((info) => {
-      return (<BalaoConversa key = {this.state.mensagensEnviadas.indexOf(info)} bRemetente = {info.remetente} bMensagem = {info.mensagem} />)
+      return (<BalaoConversa key={this.state.mensagensEnviadas.indexOf(info)} bRemetente={info.remetente} bMensagem={info.mensagem} />)
     })
   }
   pressionouEnter = (event) => {
-    if(event.which === 13) {
+    if (event.which === 13) {
       this.enviarMensagem();
     }
+  }
+  deletarMensagem = () => {
+    console.log('Clicou!')
   }
   render() {
     return (
