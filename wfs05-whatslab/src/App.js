@@ -82,16 +82,24 @@ class App extends React.Component {
         valorMensagem: ''
       });
     }
+    this.handleFocusMsg();
   };
   renderizarMensagem = () => {
     return this.state.mensagensEnviadas.map((info) => {
-      return (<BalaoConversa key={this.state.mensagensEnviadas.indexOf(info)} bRemetente={info.remetente} bMensagem={info.mensagem} />)
+      return (<BalaoConversa
+        key={this.state.mensagensEnviadas.indexOf(info)}
+        bRemetente={info.remetente}
+        bMensagem={info.mensagem}
+        doubleClick = {this.deletarMensagem}/>)
     })
   }
   pressionouEnter = (event) => {
     if (event.which === 13) {
       this.enviarMensagem();
     }
+  }
+  handleFocusMsg = () => {
+    this.inputMsg.focus()
   }
   deletarMensagem = () => {
     console.log('Clicou!')
@@ -110,6 +118,7 @@ class App extends React.Component {
               onChange={this.onChangeRemetente}
             />
             <InputMensagem
+              ref = {(input) => {this.inputMsg = input;}}
               placeholder={'Mensagem...'}
               value={this.state.valorMensagem}
               onChange={this.onChangeMensagem}
