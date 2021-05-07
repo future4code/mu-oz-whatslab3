@@ -72,19 +72,44 @@ class App extends React.Component {
     this.setState({ valorRemetente: event.target.value })
   }
   enviarMensagem = () => {
-    const novaMensagem = {
-      remetente: this.state.valorRemetente,
-      mensagem: this.state.valorMensagem
-    };
-    this.setState({
-      mensagensEnviadas: [...this.state.mensagensEnviadas, novaMensagem],
-      valorMensagem: ''
-    });
+    if (this.state.valorMensagem !== "" && this.state.valorRemetente !== "") {
+      const novaMensagem = {
+        remetente: this.state.valorRemetente,
+        mensagem: this.state.valorMensagem
+      };
+      this.setState({
+        mensagensEnviadas: [...this.state.mensagensEnviadas, novaMensagem],
+        valorMensagem: ''
+      });
+    }
+    this.handleFocusMsg();
   };
-  renderizarMensagem = () =>{
-    return this.state.mensagensEnviadas.map((info) => {
-      return (<BalaoConversa key = {this.state.mensagensEnviadas.indexOf(info)} bRemetente = {info.remetente} bMensagem = {info.mensagem} />)
+  renderizarMensagem = () => {
+    return this.state.mensagensEnviadas.map((info,index) => {
+      return (<BalaoConversa
+        key={index}
+        bRemetente = {info.remetente}
+        bMensagem = {info.mensagem}
+        onDoubleClick = {() => {
+          const caixaConfirmacao = window.confirm(`Deletar ${info.mensagem}?`)
+          if(caixaConfirmacao === true){this.deletarMensagem(info.mensagem)};
+        }}  //fechamento doubleclick
+        />) //fechamento balaoconversa
     })
+  }
+  pressionouEnter = (event) => {
+    if (event.which === 13) {
+      this.enviarMensagem();
+    }
+  }
+  handleFocusMsg = () => {
+    this.inputMsg.focus()
+  }
+  deletarMensagem = (msg) => {
+    const deletarMsg = this.state.mensagensEnviadas.filter((mensagem) => {
+      return mensagem.mensagem !== msg;
+    });
+    this.setState({mensagensEnviadas: deletarMsg})
   }
   render() {
     return (
@@ -100,9 +125,11 @@ class App extends React.Component {
               onChange={this.onChangeRemetente}
             />
             <InputMensagem
+              ref = {(input) => {this.inputMsg = input;}}
               placeholder={'Mensagem...'}
               value={this.state.valorMensagem}
               onChange={this.onChangeMensagem}
+              onKeyUp={this.pressionouEnter}
             />
             <InputBotao onClick={this.enviarMensagem}>Enviar</InputBotao>
           </MainContainer>

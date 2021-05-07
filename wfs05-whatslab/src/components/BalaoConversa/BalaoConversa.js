@@ -26,7 +26,7 @@ font-color: white;
 class BalaoConversa extends React.Component{
     render(){
         return(
-            <ContainerConversa>
+            <ContainerConversa onDoubleClick = {this.props.onDoubleClick}>
                 <LinhaRemetente>{this.props.bRemetente}</LinhaRemetente>
                 <LinhaMensagem>{this.props.bMensagem}</LinhaMensagem>
             </ContainerConversa>
