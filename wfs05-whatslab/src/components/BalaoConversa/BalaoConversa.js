@@ -24,12 +24,9 @@ font-color: white;
 `
 
 class BalaoConversa extends React.Component{
-    deletarMensagem = () => {
-        console.log('Clicou!')
-    }
     render(){
         return(
-            <ContainerConversa onDoubleClick = {this.props.doubleClick}>
+            <ContainerConversa onDoubleClick = {this.props.onDoubleClick}>
                 <LinhaRemetente>{this.props.bRemetente}</LinhaRemetente>
                 <LinhaMensagem>{this.props.bMensagem}</LinhaMensagem>
             </ContainerConversa>

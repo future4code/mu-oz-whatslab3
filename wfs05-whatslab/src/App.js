@@ -85,12 +85,16 @@ class App extends React.Component {
     this.handleFocusMsg();
   };
   renderizarMensagem = () => {
-    return this.state.mensagensEnviadas.map((info) => {
+    return this.state.mensagensEnviadas.map((info,index) => {
       return (<BalaoConversa
-        key={this.state.mensagensEnviadas.indexOf(info)}
-        bRemetente={info.remetente}
-        bMensagem={info.mensagem}
-        doubleClick = {this.deletarMensagem}/>)
+        key={index}
+        bRemetente = {info.remetente}
+        bMensagem = {info.mensagem}
+        onDoubleClick = {() => {
+          const caixaConfirmacao = window.confirm(`Deletar ${info.mensagem}?`)
+          if(caixaConfirmacao === true){this.deletarMensagem(info.mensagem)};
+        }}  //fechamento doubleclick
+        />) //fechamento balaoconversa
     })
   }
   pressionouEnter = (event) => {
@@ -101,8 +105,11 @@ class App extends React.Component {
   handleFocusMsg = () => {
     this.inputMsg.focus()
   }
-  deletarMensagem = () => {
-    console.log('Clicou!')
+  deletarMensagem = (msg) => {
+    const deletarMsg = this.state.mensagensEnviadas.filter((mensagem) => {
+      return mensagem.mensagem !== msg;
+    });
+    this.setState({mensagensEnviadas: deletarMsg})
   }
   render() {
     return (
