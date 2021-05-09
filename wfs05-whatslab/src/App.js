@@ -84,7 +84,7 @@ class App extends React.Component {
     }
     this.handleFocusMsg();
   };
-  renderizarMensagem = () => {
+  renderizarMensagem = () => { //comando para renderizar mensagem
     return this.state.mensagensEnviadas.map((info,index) => {
       return (<BalaoConversa
         key={index}
