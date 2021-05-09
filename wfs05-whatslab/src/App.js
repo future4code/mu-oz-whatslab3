@@ -12,14 +12,14 @@ flex-direction: column;
 `
 const AmbienteMensagem = styled.div`
 display: flex;
-flex-direction: column;
-justify-content: end;
+flex-direction: column-reverse;
 align-items: center;
 height: 95%;
 width: 100%;
 border: 2px solid black;
 border-radius: 8px;
 background-color: black;
+overflow-y: auto;
 `
 const AmbienteInputs = styled.div`
 display: flex;
@@ -78,7 +78,7 @@ class App extends React.Component {
         mensagem: this.state.valorMensagem
       };
       this.setState({
-        mensagensEnviadas: [...this.state.mensagensEnviadas, novaMensagem],
+        mensagensEnviadas: [novaMensagem, ...this.state.mensagensEnviadas],
         valorMensagem: ''
       });
     }
@@ -92,7 +92,7 @@ class App extends React.Component {
         bMensagem = {info.mensagem}
         onDoubleClick = {() => {
           const caixaConfirmacao = window.confirm(`Deletar ${info.mensagem}?`)
-          if(caixaConfirmacao === true){this.deletarMensagem(info.mensagem)};
+          if(caixaConfirmacao === true){this.deletarMensagem(index)};
         }}  //fechamento doubleclick
         />) //fechamento balaoconversa
     })
@@ -105,9 +105,9 @@ class App extends React.Component {
   handleFocusMsg = () => {
     this.inputMsg.focus()
   }
-  deletarMensagem = (msg) => {
-    const deletarMsg = this.state.mensagensEnviadas.filter((mensagem) => {
-      return mensagem.mensagem !== msg;
+  deletarMensagem = (index) => {
+    const deletarMsg = this.state.mensagensEnviadas.filter((_,id) => {
+      return id !== index;
     });
     this.setState({mensagensEnviadas: deletarMsg})
   }
